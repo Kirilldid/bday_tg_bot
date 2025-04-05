@@ -12,23 +12,56 @@ questions = [
     {
         "question": "What did we call our legendary Friday hangout spot?",
         "hint": "(Hint: It had the best cheap pizza!)",
-        "options": ["Joe's Pizza", "Mario's Diner", "The Corner Pub"],
+        "options": ["Joe's Pizza", "Mario's Diner", "The Corner Pub", "Pasta Palace"],
         "answer": 0,
-        "image": "https://cdn.pixabay.com/photo/2017/08/06/08/55/key-chain-2590442_1280.jpg"  # Placeholder image URL
+        "image": "https://cdn.pixabay.com/photo/2017/08/06/08/55/key-chain-2590442_1280.jpg",
+        "correct_feedback": "✅ You remembered! Joe's Pizza was our spot!",
+        "incorrect_feedback": "❌ Oh no! It was Joe's Pizza, not this one!"
     },
     {
         "question": "Who always forgets their wallet when we go out?",
         "hint": "(Hint: Classic move since 2018!)",
-        "options": ["Alex", "Chris", "Jordan"],
+        "options": ["Alex", "Chris", "Jordan", "Emma"],
         "answer": 1,
-        "image": "https://cdn.pixabay.com/photo/2019/11/14/03/22/shocked-4625235_1280.png"  # Placeholder image URL
+        "image": "https://cdn.pixabay.com/photo/2019/11/14/03/22/shocked-4625235_1280.png",
+        "correct_feedback": "✅ Yep, Chris always forgets his wallet!",
+        "incorrect_feedback": "❌ Nope! It was Chris who always forgets!"
     },
     {
         "question": "Which inside joke do we use for bad movie nights?",
         "hint": "(Hint: Named after that terrible horror film we watched)",
-        "options": ["Project X", "The Rick Special", "Spooky Time"],
+        "options": ["Project X", "The Rick Special", "Spooky Time", "Late Night Horror"],
         "answer": 1,
-        "image": "https://cdn.pixabay.com/photo/2020/03/18/06/34/smiley-4942893_1280.png"  # Placeholder image URL
+        "image": "https://cdn.pixabay.com/photo/2020/03/18/06/34/smiley-4942893_1280.png",
+        "correct_feedback": "✅ You got it! The Rick Special is what we call it!",
+        "incorrect_feedback": "❌ Nope, it was 'The Rick Special!'"
+    },
+    {
+        "question": "What’s the name of our favorite hiking trail?",
+        "hint": "(Hint: We hiked it last summer)",
+        "options": ["Eagle’s Peak", "Mountainview Trail", "Forest Loop", "River Path"],
+        "answer": 2,
+        "image": "https://cdn.pixabay.com/photo/2016/12/16/00/35/winter-1916092_1280.jpg",
+        "correct_feedback": "✅ Correct! Forest Loop was our summer adventure!",
+        "incorrect_feedback": "❌ It’s actually Forest Loop, we hiked it last summer!"
+    },
+    {
+        "question": "What was the name of the song we always sing at karaoke?",
+        "hint": "(Hint: It's a classic rock anthem)",
+        "options": ["Bohemian Rhapsody", "Livin’ on a Prayer", "Sweet Caroline", "I Will Survive"],
+        "answer": 0,
+        "image": "https://cdn.pixabay.com/photo/2015/05/10/16/14/karaoke-759476_1280.jpg",
+        "correct_feedback": "✅ Bohemian Rhapsody – the song we rocked at karaoke!",
+        "incorrect_feedback": "❌ Oh, it’s Bohemian Rhapsody we always sing!"
+    },
+    {
+        "question": "What’s our secret code for the best party?",
+        "hint": "(Hint: It involves a famous drink)",
+        "options": ["Rum Punch", "Margarita Madness", "Tequila Sunrise", "Pina Colada Party"],
+        "answer": 3,
+        "image": "https://cdn.pixabay.com/photo/2017/08/30/02/00/drinks-2692222_1280.jpg",
+        "correct_feedback": "✅ You nailed it! Pina Colada Party is our code!",
+        "incorrect_feedback": "❌ Nope, it's Pina Colada Party, we’ve said it a hundred times!"
     }
 ]
 
@@ -72,8 +105,10 @@ def answer_question(call):
     if correct:
         user["score"] += 1
         bot.answer_callback_query(call.id, "✅ Correct!")
+        bot.send_message(chat_id, q_data["correct_feedback"])
     else:
         bot.answer_callback_query(call.id, "❌ Wrong answer!")
+        bot.send_message(chat_id, q_data["incorrect_feedback"])
 
     user["current_q"] += 1
     bot.send_message(chat_id, f"Score: {user['score']} / {user['current_q']}")
