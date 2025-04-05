@@ -1,9 +1,11 @@
-import telebot
 import os
+import telebot
+from flask import Flask, request
 from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 TOKEN = os.getenv("BOT_TOKEN")
 bot = telebot.TeleBot(TOKEN)
+app = Flask(__name__)
 
 # Sample questions for the quiz with images
 questions = [
@@ -98,6 +100,18 @@ def restart_quiz(call):
     user_data[chat_id] = {"score": 0, "current_q": 0}
     send_question(chat_id)
 
+@app.route(f"/{TOKEN}", methods=["POST"])
+def webhook():
+    json_string = request.get_data().decode("utf-8")
+    update = telebot.types.Update.de_json(json_string)
+    bot.process_new_updates([update])
+    return "!", 200
+
+@app.route("/", methods=["GET"])
+def index():
+    bot.remove_webhook()
+    bot.set_webhook(url=f"{os.getenv('RENDER_EXTERNAL_URL')}/{TOKEN}")
+    return "Webhook set!", 200
 
 if __name__ == "__main__":
-    bot.polling(none_stop=True)
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
