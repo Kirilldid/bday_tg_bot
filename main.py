@@ -113,7 +113,7 @@ user_data = {}
 @bot.message_handler(commands=['start'])
 def start(message):
     user_data[message.chat.id] = {"score": 0, "current_q": 0}
-    bot.send_message(message.chat.id, "👋 Welcome to the Friendship Quiz!\n\nAnswer 10-15 fun questions about our group's legendary moments.\n\nEach question comes with a hint, and you’ll get feedback after every answer. Let's see how well you remember our adventures!")
+    bot.send_message(message.chat.id, "👋 Ответь на несколько вопросов про наши легендарные тусовки. \n\n Так ты докажешь, что ты реально Коля, а не какой-то бот 😏")
     send_question(message.chat.id)
 
 def send_question(chat_id):
@@ -131,7 +131,7 @@ def send_question(chat_id):
     if "image" in q_data and q_data["image"]:
         bot.send_photo(chat_id, q_data["image"])
 
-    bot.send_message(chat_id, f"{q_data['question']}\n{q_data['hint']}", reply_markup=markup)
+    bot.send_message(chat_id, f"{q_data['question']}", reply_markup=markup)
 
 @bot.callback_query_handler(func=lambda call: call.data.startswith("answer_"))
 def answer_question(call):
