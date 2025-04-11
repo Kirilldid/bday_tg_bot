@@ -101,9 +101,17 @@ questions = [
         "question": "Каким из способов мы НЕ поздравили Дэниэла с др в 2021 году?",
         "options": ["Личными сообщениями", "Во всех беседах всех др", "Голубиной почтой", "Сообщением в сбербанке"],
         "answer": 2,
-        "image": "https://i.ibb.co/fVR4s5GY/IMG-0604.jpg",  # временная картинка
+        "image": "https://ideogram.ai/assets/image/lossless/response/mng6lWOaSl2H05lHK_gtBg",  # временная картинка
         "correct_feedback": "✅ Правильно! Остальные методы были использованы!",
         "incorrect_feedback": "❌ А вот и нет. Ты что, не поздравлял?"
+    },
+    {
+        "question": "Что мы делали накануне?",
+        "options": ["Парились в бане", "Жарили шашлыки", "Прятались от ракет", "Играли в нарды"],
+        "answer": 2,
+        "image": "https://i.ibb.co/NdzJfq6b/photo-2025-04-11-01-08-07.jpg",  # временная картинка
+        "correct_feedback": "✅ Правильно! В такой компании было совсем не страшно",
+        "incorrect_feedback": "❌ Хочется повторить всё, кроме правильного ответа"
     },
 ]
 
@@ -161,14 +169,14 @@ def finish_quiz(chat_id):
     score = user_data[chat_id]["score"]
 
     if score == len(questions):
-        result = "🎉 Perfect! You're the memory champion!"
+        result = "🎉 Невероятно! Ты легенда, откуда ты все это знаешь? Может ты составлял этот квиз?"
     elif score >= len(questions) // 2:
-        result = "😊 Not bad! You remember a lot!"
+        result = "😊 Харош! Много помнишь, хранишь много тепла в своей памяти"
     else:
-        result = "😅 Well... maybe it's time for a reunion!"
+        result = "😅 Штош... каждется, это повод собраться вновь"
 
     markup = InlineKeyboardMarkup()
-    markup.add(InlineKeyboardButton("🔄 Play Again", callback_data="restart"))
+    markup.add(InlineKeyboardButton("🔄 Попробуем еще раз?", callback_data="restart"))
 
     bot.send_message(chat_id, f"Quiz finished! Your final score: {score}/{len(questions)}\n{result}", reply_markup=markup)
 
